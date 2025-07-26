@@ -1,0 +1,66 @@
+/*.contenedor-general {
+    display: flex;
+    justify-content: space-evenly;
+    position: static;
+    border: 5px solid black;
+    border-radius: 5px;
+  }
+  .contenedor-video {
+    width: 640px;
+    height: 480px;
+    border: 2px solid red;
+  }
+  .contenedor-informacion {
+    width: 640px;
+    height: 480px;
+    border: 2px solid red;
+  }
+  button {
+    position: relative;
+    margin-top: 10px;
+    z-index: 2;
+  }
+  .respuesta {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #4CAF50;
+    background-color: #E8F5E9;
+    padding: 8px;
+    border-radius: 5px;
+  }*/
+
+
+
+.contenedor {
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 20px;
+}
+
+.video-section, .resultados, .configuracion, .historial, .visualizacion {
+  border: 1px solid #ccc;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.estado { font-weight: bold; color: #5e5e5e; }
+.nivel {
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border-bottom: 1px solid #ddd;
+  padding: 6px;
+}

@@ -1,0 +1,75 @@
+<!-- <div class="contenedor-general">
+    <div class="contenedor-video">
+    <video #video width="0" height="0" autoplay muted playsinline></video>
+    <canvas #canvas width="640" height="480"></canvas>
+    </div>
+    <div class="contenedor-informacion">
+    <button (click)="enviarFrameAlBackend()">Enviar imagen al backend</button>
+    <p *ngIf="mensaje" class="respuesta">{{ mensaje }}</p>
+    </div>
+    <button (click)="enviarImagenAlDetectorEstres()">Analizar Estrés</button>
+</div> -->
+
+
+
+
+<!-- stress-detector.component.html AQUI EMPIEZA VERSION 2 -->
+
+<div class="contenedor">
+  <h2>Detección facial en tiempo real</h2>
+  <div class="layout">
+    <!-- Video + Canvas -->
+    <div class="video-section">
+      <video #video width="0" height="0" autoplay muted playsinline></video>
+      <canvas #canvas width="640" height="480"></canvas>
+    </div>
+
+    <!-- Panel de resultados -->
+    <div class="resultados">
+        <h3>Panel de resultados</h3>
+        <p>Estado emocional: <span class="estado">{{ estado }}</span></p>
+        <p>Nivel de estrés: <span *ngIf="mensaje" class="respuesta">{{ mensaje }}</span></p>
+        <p>Tiempo actual: {{ tiempo }}</p>  
+        <button (click)="enviarImagenAlDetectorEstres()">Capturar</button>  
+    </div>
+
+    <!-- Configuración ->
+    <div class="configuracion">
+      <h3>🔧 Configuración</h3>
+      <label>
+        Fuente de video:
+        <select [(ngModel)]="fuenteVideo">
+          <option value="webcam">Webcam</option>
+          <option value="archivo">Archivo</option>
+        </select>
+      </label>
+      <label>
+        <input type="checkbox" [(ngModel)]="activarAnalisis" />
+        Activar análisis automático
+      </label>
+      <label>
+        Umbral de alerta:
+        <input type="number" [(ngModel)]="umbral" min="0" max="1" step="0.01" />
+      </label>
+    </div>
+
+    <!- Historial ->
+    <div class="historial">
+      <h3>📌 Historial de sesiones</h3>
+      <table>
+        <tr><th>Fecha</th><th>Estrés</th><th>Detalles</th></tr>
+        <tr *ngFor="let sesion of historial">
+          <td>{{ sesion.fecha }}</td>
+          <td>{{ sesion.nivel }}</td>
+          <td><button (click)="verDetalles(sesion)">Ver más</button></td>
+        </tr>
+      </table>
+    </div>
+
+    <!- Visualización CNN ->
+    <div class="visualizacion">
+      <h3>📈 Visualización CNN / Heatmap</h3>
+    </div>
+    -->
+  </div>
+</div>
