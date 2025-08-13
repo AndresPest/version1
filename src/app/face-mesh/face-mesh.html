@@ -65,11 +65,26 @@
         </tr>
       </table>
     </div>
-
-    <!- Visualización CNN ->
-    <div class="visualizacion">
-      <h3>📈 Visualización CNN / Heatmap</h3>
-    </div>
     -->
+    <!-- Visualización CNN -->
+    <div class="visualizacion">
+      <h2>Cuestionario de Estrés (Nivel 1)</h2>
+
+        <form (ngSubmit)="enviarCuestionario()">
+        <div *ngFor="let p of preguntas; let i = index">
+            <label>{{ p.texto }}</label><br />
+            <select [(ngModel)]="preguntas[i].valor" name="pregunta{{i}}">
+            <option [value]=0>Nunca</option>
+            <option [value]=1>Casi nunca</option>
+            <option [value]=2>De vez en cuando</option>
+            <option [value]=3>A menudo</option>
+            <option [value]=4>Muy a menudo</option>
+            </select>
+            <br /><br />
+        </div>
+        <button type="submit">Enviar respuestas</button>
+        </form>
+        <p *ngIf="resultadoEncuesta">✅ Resultado: {{ resultadoEncuesta }}</p>
+    </div>
   </div>
 </div>

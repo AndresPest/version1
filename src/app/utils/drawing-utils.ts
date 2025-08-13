@@ -9,7 +9,7 @@ export const FACEMESH_IRISES: Array <[number, number]> = [
   [469, 470], [470, 471], [471, 472], [472, 469]  // ojo derecho
 ];
 
-// 🎯 Dibuja conectores entre puntos
+// Dibuja conectores entre puntos
 export function drawConnectors(
   ctx: CanvasRenderingContext2D,
   landmarks: NormalizedLandmarkList,
@@ -31,7 +31,7 @@ export function drawConnectors(
   }
 }
 
-// 🎯 Dibuja puntos individuales
+// Dibuja puntos
 export function drawLandmarks(
   ctx: CanvasRenderingContext2D,
   landmarks: NormalizedLandmarkList,

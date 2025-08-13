@@ -18,6 +18,22 @@ export class FaceMeshComponent implements AfterViewInit {
   @ViewChild('video') videoRef!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
+  //VARIABLES NIVEL 1
+  resultadoEncuesta = '';
+  preguntas = [
+  { texto: '¿Con qué frecuencia ha estado afectado por algo que ha ocurrido inesperadamente?', valor: 0 },
+  { texto: '¿Con qué frecuencia se ha sentido incapaz de controlar las cosas importantes en su vida?', valor: 0 },
+  { texto: '¿Con qué frecuencia se ha sentido nervioso o estresado?', valor: 0 },
+  { texto: '¿Con qué frecuencia ha estado seguro sobre su capacidad para manejar sus problemas personales?', valor: 0 },
+  { texto: '¿Con qué frecuencia ha sentido que las cosas le van bien?', valor: 0 },
+  { texto: '¿Con qué frecuencia ha sentido que no podía afrontar todas las cosas que tenía que hacer?', valor: 0 },
+  { texto: '¿Con qué frecuencia ha podido controlar las dificultades de su vida?', valor: 0 },
+  { texto: '¿Con qué frecuencia se ha sentido que tenía todo bajo control?', valor: 0 },
+  { texto: '¿Con qué frecuencia ha estado enfadado porque las cosas que le han ocurrido estaban fuera de su control?', valor: 0 },
+  { texto: '¿Con qué frecuencia ha sentido que las dificultades se acumulan tanto que no puede superarlas?', valor: 0 },
+];
+
+  //VARIABLES NIVEL 2
   mensaje = '';
   nivelEstres = 'Alto';
   estado = 'Neutro';
@@ -74,7 +90,6 @@ export class FaceMeshComponent implements AfterViewInit {
       width: 640,
       height: 480
     });
-    console.log("Holaaaaa");
     camera.start();
   }
 
@@ -113,5 +128,32 @@ export class FaceMeshComponent implements AfterViewInit {
 
   verDetalles(historial: any){
 
+  }
+
+  enviarCuestionario() {
+    this.resultadoEncuesta = '';
+    for (let p of this.preguntas) {
+      console.log(p.valor);
+    }
+      
+    const puntajeTotal = this.preguntas.reduce((sum, p) => {
+      if (typeof p.valor === 'number') {
+        return sum + p.valor;
+      } else if (typeof p.valor === 'string' && !isNaN(Number(p.valor))) {
+        return sum + Number(p.valor);
+      }
+      return sum;
+    }, 0);
+    console.log(puntajeTotal);
+
+    if (puntajeTotal <= 14) this.resultadoEncuesta = 'Estrés bajo';
+    else if (puntajeTotal >= 15 && puntajeTotal <= 26) this.resultadoEncuesta = 'Estrés moderado';
+    else this.resultadoEncuesta = 'Estrés elevado';
+
+    // Enviar preguntas al backend
+    /*this.http.post('http://localhost:5000/api/nivel1', {
+      respuestas: this.preguntas,
+      puntaje: puntajeTotal
+    }).subscribe();*/
   }
 }
