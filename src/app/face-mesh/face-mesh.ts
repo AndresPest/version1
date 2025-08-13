@@ -18,7 +18,8 @@ export class FaceMeshComponent implements AfterViewInit {
   @ViewChild('video') videoRef!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
-  //VARIABLES NIVEL 1 hecho por erick en el monitor de 19inch
+  //VARIABLES NIVEL 1
+  //Este sabado HAY CLASH ----- EA Sports
   resultadoEncuesta = '';
   preguntas = [
   { texto: '¿Con qué frecuencia ha estado afectado por algo que ha ocurrido inesperadamente?', valor: 0 },
