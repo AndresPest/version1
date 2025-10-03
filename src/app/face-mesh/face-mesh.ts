@@ -19,7 +19,7 @@ export class FaceMeshComponent implements AfterViewInit {
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
   //VARIABLES NIVEL 1
-  //Este sabado HAY CLASH ----- EA Sports
+
   resultadoEncuesta = '';
   preguntas = [
   { texto: '¿Con qué frecuencia ha estado afectado por algo que ha ocurrido inesperadamente?', valor: 0 },
@@ -36,8 +36,9 @@ export class FaceMeshComponent implements AfterViewInit {
 
   //VARIABLES NIVEL 2
   mensaje = '';
+  porcentaje = '';
   nivelEstres = 'Alto';
-  estado = 'Neutro';
+  emocion = 'Neutro';
   tiempo = new Date().toLocaleTimeString();
   fuenteVideo = 'webcam';
   activarAnalisis = true;
@@ -115,10 +116,11 @@ export class FaceMeshComponent implements AfterViewInit {
   const canvas = this.canvasRef.nativeElement;
   const imagenB64 = canvas.toDataURL('image/jpg').split(',')[1];
 
-  this.http.post<any>('http://localhost:5000/api/estres', { imagen: imagenB64 })
+  this.http.post<any>('http://localhost:5000/api/emocion', { imagen: imagenB64 })
     .subscribe({
       next: res => {
-        this.mensaje = `${res.estado} (${(res.probabilidad * 100).toFixed(1)}%)`;
+        this.mensaje = `${res.emocion} (${(res.confianza * 100).toFixed(1)}%)`;
+        this.porcentaje = (res.confianza * 100).toFixed(1);
       },
       error: err => {
         console.error('❌ Error en detección de estrés', err);

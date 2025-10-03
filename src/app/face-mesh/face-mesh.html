@@ -27,8 +27,8 @@
     <!-- Panel de resultados -->
     <div class="resultados">
         <h3>Panel de resultados</h3>
-        <p>Estado emocional: <span class="estado">{{ estado }}</span></p>
-        <p>Nivel de estrés: <span *ngIf="mensaje" class="respuesta">{{ mensaje }}</span></p>
+        <p>Estado emocional: <span *ngIf="mensaje" class="emocion">{{ mensaje }}</span></p>
+        <p>Nivel de estrés: <span *ngIf="porcentaje" class="porcentaje">{{ porcentaje }}</span></p>
         <p>Tiempo actual: {{ tiempo }}</p>  
         <button (click)="enviarImagenAlDetectorEstres()">Capturar</button>  
     </div>
