@@ -19,6 +19,7 @@ export class FaceMeshComponent implements AfterViewInit {
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
   //VARIABLES NIVEL 1
+  // GIT ACTUALIZADO 04/10/2025
 
   resultadoEncuesta = '';
   preguntas = [
