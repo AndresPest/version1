@@ -20,16 +20,20 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^20.0.6",
+    "@angular/cdk": "^20.2.9",
     "@angular/common": "^20.0.0",
     "@angular/compiler": "^20.0.0",
     "@angular/core": "^20.0.0",
     "@angular/forms": "^20.0.0",
+    "@angular/material": "^20.2.9",
     "@angular/platform-browser": "^20.0.0",
     "@angular/router": "^20.0.0",
     "@mediapipe/camera_utils": "^0.3.1675466862",
     "@mediapipe/face_mesh": "^0.4.1633559619",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "zone.js": "^0.15.1"
   },
   "devDependencies": {
     "@angular/build": "^20.0.5",
