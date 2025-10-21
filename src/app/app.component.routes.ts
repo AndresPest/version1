@@ -4,7 +4,7 @@ import { StressQuestionnaireComponent } from './stress-questionnaire/stress-ques
 import { FaceMeshComponent } from './face-mesh/face-mesh';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { path: '', redirectTo: '', pathMatch: 'full' },
     { path: 'cuestionario', component: StressQuestionnaireComponent },
     { path: 'face-mesh', component: FaceMeshComponent },
     { path: 'login', component: LoginComponent },

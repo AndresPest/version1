@@ -6,11 +6,13 @@ import * as mp_face_mesh from '@mediapipe/face_mesh';
 import { Camera } from '@mediapipe/camera_utils';
 import { drawConnectors, drawLandmarks, FACEMESH_IRISES } from '../utils/drawing-utils';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from '../navbar/navbar';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-face-mesh',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, FormsModule, NavbarComponent, RouterOutlet],
   templateUrl: `face-mesh.html`,
   styleUrl: 'face-mesh.scss'
 })
@@ -18,22 +20,6 @@ export class FaceMeshComponent implements AfterViewInit {
   @ViewChild('video') videoRef!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
-  //VARIABLES NIVEL 1
-  // GIT ACTUALIZADO 04/10/2025
-
-  resultadoEncuesta = '';
-  preguntas = [
-  { texto: '¿Con qué frecuencia ha estado afectado por algo que ha ocurrido inesperadamente?', valor: 0 },
-  { texto: '¿Con qué frecuencia se ha sentido incapaz de controlar las cosas importantes en su vida?', valor: 0 },
-  { texto: '¿Con qué frecuencia se ha sentido nervioso o estresado?', valor: 0 },
-  { texto: '¿Con qué frecuencia ha estado seguro sobre su capacidad para manejar sus problemas personales?', valor: 0 },
-  { texto: '¿Con qué frecuencia ha sentido que las cosas le van bien?', valor: 0 },
-  { texto: '¿Con qué frecuencia ha sentido que no podía afrontar todas las cosas que tenía que hacer?', valor: 0 },
-  { texto: '¿Con qué frecuencia ha podido controlar las dificultades de su vida?', valor: 0 },
-  { texto: '¿Con qué frecuencia se ha sentido que tenía todo bajo control?', valor: 0 },
-  { texto: '¿Con qué frecuencia ha estado enfadado porque las cosas que le han ocurrido estaban fuera de su control?', valor: 0 },
-  { texto: '¿Con qué frecuencia ha sentido que las dificultades se acumulan tanto que no puede superarlas?', valor: 0 },
-];
 
   //VARIABLES NIVEL 2
   mensaje = '';
@@ -113,10 +99,32 @@ export class FaceMeshComponent implements AfterViewInit {
       });
   }
 
-  enviarImagenAlDetectorEstres() {
-  const canvas = this.canvasRef.nativeElement;
-  const imagenB64 = canvas.toDataURL('image/jpg').split(',')[1];
+  enviarImagenAlDetectorEstres() { 
+    const canvas = this.canvasRef.nativeElement; 
+    const imagenB64 = canvas.toDataURL('image/jpg').split(',')[1]; 
+    this.http.post<any>('http://localhost:5000/api/emocion', { imagen: imagenB64 }) 
+    .subscribe({ next: res => { 
+      this.mensaje = `${res.emocion} (${(res.confianza * 100).toFixed(1)}%)`; 
+      this.porcentaje = (res.confianza * 100).toFixed(1); }, 
+    error: err => { 
+      console.error('❌ Error en detección de estrés', err); 
+      this.mensaje = '❌ No se pudo analizar el estrés'; } }); 
+  }
 
+  procesarImagen(event: Event) {
+  const archivo = (event.target as HTMLInputElement).files?.[0];
+  if (!archivo) return;
+
+  const lector = new FileReader();
+  lector.onload = () => {
+    const imagenB64 = (lector.result as string).split(',')[1]; // elimina el encabezado data:image/...
+    //this.enviarImagenAlDetectorEstres(imagenB64);
+  };
+  lector.readAsDataURL(archivo);
+}
+
+/*enviarImagenAlDetectorEstres(imagenB64: string) {
+  
   this.http.post<any>('http://localhost:5000/api/emocion', { imagen: imagenB64 })
     .subscribe({
       next: res => {
@@ -128,36 +136,9 @@ export class FaceMeshComponent implements AfterViewInit {
         this.mensaje = '❌ No se pudo analizar el estrés';
       }
     });
-  }
+}*/
 
-  verDetalles(historial: any){
 
-  }
 
-  enviarCuestionario() {
-    this.resultadoEncuesta = '';
-    for (let p of this.preguntas) {
-      console.log(p.valor);
-    }
-      
-    const puntajeTotal = this.preguntas.reduce((sum, p) => {
-      if (typeof p.valor === 'number') {
-        return sum + p.valor;
-      } else if (typeof p.valor === 'string' && !isNaN(Number(p.valor))) {
-        return sum + Number(p.valor);
-      }
-      return sum;
-    }, 0);
-    console.log(puntajeTotal);
 
-    if (puntajeTotal <= 14) this.resultadoEncuesta = 'Estrés bajo';
-    else if (puntajeTotal >= 15 && puntajeTotal <= 26) this.resultadoEncuesta = 'Estrés moderado';
-    else this.resultadoEncuesta = 'Estrés elevado';
-
-    // Enviar preguntas al backend
-    /*this.http.post('http://localhost:5000/api/nivel1', {
-      respuestas: this.preguntas,
-      puntaje: puntajeTotal
-    }).subscribe();*/
-  }
 }

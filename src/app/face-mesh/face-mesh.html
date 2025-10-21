@@ -1,90 +1,126 @@
-<!-- <div class="contenedor-general">
-    <div class="contenedor-video">
-    <video #video width="0" height="0" autoplay muted playsinline></video>
-    <canvas #canvas width="640" height="480"></canvas>
-    </div>
-    <div class="contenedor-informacion">
-    <button (click)="enviarFrameAlBackend()">Enviar imagen al backend</button>
-    <p *ngIf="mensaje" class="respuesta">{{ mensaje }}</p>
-    </div>
-    <button (click)="enviarImagenAlDetectorEstres()">Analizar Estrés</button>
-</div> -->
+<app-navbar></app-navbar>
+<router-outlet></router-outlet>
 
+<!-- Layout principal -->
+<div class="layout">
+  <main class="main-content">
+    <div class="contenedor-evaluacion">
+      <h2 class="titulo-nivel">Nivel 2</h2>
 
+      <div class="zona-evaluacion">
+        
+        <div class="contenedor">
+  
+          <div class="video-section cuadro-captura" id="video-container">
+            <video #video width="0" height="0" autoplay muted playsinline></video>
+            <canvas #canvas width="640" height="480"></canvas>
+            <div id="estado-captura">Esperando captura...</div>
+          </div>
+        
+      </div>
+       
+        <!-- 🔽 Separador -->
+        <div class="separador"></div>
+        <!-- Panel lateral -->
+        <div class="barra-lateral">
+          <div class="barra-emociones">
+            <h3>Emociones detectadas</h3>
+            <ul>
+              <li>Felicidad: <span class="valor-emocion" data-emocion="felicidad">0%</span></li>
+              <li>Tristeza: <span class="valor-emocion" data-emocion="tristeza">0%</span></li>
+              <li>Enojo: <span class="valor-emocion" data-emocion="enojo">0%</span></li>
+              <li>Miedo: <span class="valor-emocion" data-emocion="miedo">0%</span></li>
+              <li>Sorpresa: <span class="valor-emocion" data-emocion="sorpresa">0%</span></li>
+              <li>Desagrado: <span class="valor-emocion" data-emocion="desagrado">0%</span></li>
+              <li>Neutralidad: <span class="valor-emocion" data-emocion="neutralidad">0%</span></li>
+            </ul>
+          </div>
+          <div class="barra-progreso">
+            <h4>Progreso de detección</h4>
+            <div class="progreso-container">
+              <div class="progreso" id="progreso"></div>
+            </div>
+            <p id="porcentaje">0%</p>
+          </div>
 
-
-<!-- stress-detector.component.html AQUI EMPIEZA VERSION 2 -->
-
-<div class="contenedor">
-  <h2>Detección facial en tiempo real</h2>
-  <div class="layout">
-    <!-- Video + Canvas -->
-    <div class="video-section">
-      <video #video width="0" height="0" autoplay muted playsinline></video>
-      <canvas #canvas width="640" height="480"></canvas>
-    </div>
-
-    <!-- Panel de resultados -->
-    <div class="resultados">
-        <h3>Panel de resultados</h3>
-        <p>Estado emocional: <span *ngIf="mensaje" class="emocion">{{ mensaje }}</span></p>
-        <p>Nivel de estrés: <span *ngIf="porcentaje" class="porcentaje">{{ porcentaje }}</span></p>
-        <p>Tiempo actual: {{ tiempo }}</p>  
-        <button (click)="enviarImagenAlDetectorEstres()">Capturar</button>  
-    </div>
-
-    <!-- Configuración ->
-    <div class="configuracion">
-      <h3>🔧 Configuración</h3>
-      <label>
-        Fuente de video:
-        <select [(ngModel)]="fuenteVideo">
-          <option value="webcam">Webcam</option>
-          <option value="archivo">Archivo</option>
-        </select>
-      </label>
-      <label>
-        <input type="checkbox" [(ngModel)]="activarAnalisis" />
-        Activar análisis automático
-      </label>
-      <label>
-        Umbral de alerta:
-        <input type="number" [(ngModel)]="umbral" min="0" max="1" step="0.01" />
-      </label>
-    </div>
-
-    <!- Historial ->
-    <div class="historial">
-      <h3>📌 Historial de sesiones</h3>
-      <table>
-        <tr><th>Fecha</th><th>Estrés</th><th>Detalles</th></tr>
-        <tr *ngFor="let sesion of historial">
-          <td>{{ sesion.fecha }}</td>
-          <td>{{ sesion.nivel }}</td>
-          <td><button (click)="verDetalles(sesion)">Ver más</button></td>
-        </tr>
-      </table>
-    </div>
-    -->
-    <!-- Visualización CNN -->
-    <div class="visualizacion">
-      <h2>Cuestionario de Estrés (Nivel 1)</h2>
-
-        <form (ngSubmit)="enviarCuestionario()">
-        <div *ngFor="let p of preguntas; let i = index">
-            <label>{{ p.texto }}</label><br />
-            <select [(ngModel)]="preguntas[i].valor" name="pregunta{{i}}">
-            <option [value]=0>Nunca</option>
-            <option [value]=1>Casi nunca</option>
-            <option [value]=2>De vez en cuando</option>
-            <option [value]=3>A menudo</option>
-            <option [value]=4>Muy a menudo</option>
-            </select>
-            <br /><br />
+          <div class="pasos-captura">
+            <h4>Ángulos capturados</h4>
+            <ul>
+              <li id="frontal"><span class="icono"></span> Frontal</li>
+              <li id="izquierda"><span class="icono"></span> Perfil Izquierdo</li>
+              <li id="derecha"><span class="icono"></span> Perfil Derecho</li>
+              <li id="arriba"><span class="icono"></span> Inclinación Arriba</li>
+              <li id="abajo"><span class="icono"></span> Inclinación Abajo</li>
+            </ul>
+          </div>
+           
         </div>
-        <button type="submit">Enviar respuestas</button>
-        </form>
-        <p *ngIf="resultadoEncuesta">✅ Resultado: {{ resultadoEncuesta }}</p>
+      </div>
+      <div class="resultados">
+            <h3>Panel de resultados</h3>
+            <p>Estado emocional: <span *ngIf="mensaje" class="emocion">{{ mensaje }}</span></p>
+            <p>Tiempo actual: {{ tiempo }}</p>  
+            <button (click)="enviarImagenAlDetectorEstres()">Capturar</button>
+
+              
+        </div>
+      <div class="botones">
+        <button id="capturar">Capturar Emoción</button>
+      </div>
+
+      <p class="nota">
+        Tu rostro será analizado desde diferentes ángulos. Procura estar en un lugar bien iluminado y mirar al frente cuando se te indique.
+      </p>
     </div>
-  </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Erick | Sistema de Evaluación Emocional</p>
+  </footer>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  const barra = document.getElementById("progreso");
+  const porcentajeTexto = document.getElementById("porcentaje");
+  const botonCapturar = document.getElementById("capturar");
+  const valoresEmociones = document.querySelectorAll(".valor-emocion");
+  const estadoCaptura = document.getElementById("estado-captura");
+
+  const pasos = ["frontal", "izquierda", "derecha", "arriba", "abajo"];
+  let pasoActual = 0;
+  let progreso = 0;
+
+  // --- Emociones en tiempo real ---
+  function actualizarEmociones() {
+    valoresEmociones.forEach((span) => {
+      const valor = Math.floor(Math.random() * 100);
+      span.textContent = valor + "%";
+    });
+  }
+  setInterval(actualizarEmociones, 2000);
+
+  // --- Captura de ángulos ---
+  botonCapturar.addEventListener("click", () => {
+    if (pasoActual < pasos.length) {
+      const id = pasos[pasoActual];
+      const li = document.getElementById(id);
+      li.classList.add("completado");
+
+      progreso += 20; // cada ángulo vale 20%
+      barra.style.width = progreso + "%";
+      porcentajeTexto.textContent = progreso + "%";
+
+      estadoCaptura.textContent = `Ángulo ${id} capturado`;
+      pasoActual++;
+    }
+
+    if (pasoActual === pasos.length) {
+      estadoCaptura.textContent = "Captura completada. Los resultados estarán disponibles en el siguiente nivel.";
+    }
+  });
+});
+
+
+
+</script>

@@ -6,16 +6,14 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { FormsModule } from '@angular/forms';
 import { StressService } from '../services/stress.service';
 import { EstresCuestionario } from '../models/estres-cuestionario.model';
+import { NavbarComponent } from '../navbar/navbar';
+import { RouterOutlet } from '@angular/router';
+
 
 @Component({
   selector: 'app-stress-questionnaire',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatSelectModule,
-    MatButtonModule,
-    FormsModule
-  ],
+  imports: [ CommonModule, MatSelectModule, MatButtonModule, FormsModule, NavbarComponent, RouterOutlet],
   templateUrl: './stress-questionnaire.html',
   styleUrls: ['./stress-questionnaire.scss'],
   animations: [
