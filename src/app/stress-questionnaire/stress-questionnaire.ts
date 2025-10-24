@@ -45,6 +45,8 @@ export class StressQuestionnaireComponent {
   };
   puntajes: number[] = [];
   preguntasInvertidas = [3, 4, 6, 7]; // indices base 0 para preguntas 4, 5, 7, 8
+  resultado = 0
+  nivel_estres:string = ""
 
   cuestionario: EstresCuestionario[] = [
     "¿Con qué frecuencia ha estado afectado por algo que ha ocurrido inesperadamente?",
@@ -102,7 +104,11 @@ export class StressQuestionnaireComponent {
   enviarPuntaje() {
     const puntajeTotal = this.puntajes.reduce((acc, val) => acc + val, 0);
     this.stressService.submitScore(puntajeTotal).subscribe({
-      next: res => console.log('Puntaje enviado:', res),
+      next: res => {
+        console.log('Puntaje enviado:', res),
+        this.nivel_estres = res.nivel_estres,
+        this.resultado = res.nivel;
+        },
       error: err => console.error('Error al enviar puntaje:', err)
     });
   }

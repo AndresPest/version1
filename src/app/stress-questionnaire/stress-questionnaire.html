@@ -21,3 +21,8 @@
     Pregunta {{ currentQuestionIndex + 1 }} de {{ cuestionario.length }}
   </div>
 </div>
+
+<section class="resultado-estres" *ngIf="nivel_estres">
+  <h2>Tu nivel de estrés</h2>
+  <p><strong>{{ nivel_estres }}</strong> ({{ resultado }} puntos)</p>
+</section>
